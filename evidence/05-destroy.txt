@@ -1,0 +1,210 @@
+### tofu destroy
+$ tofu destroy -auto-approve
+
+data.archive_file.Process_Orders_zip: Reading...
+data.archive_file.Process_Orders_zip: Read complete after 0s [id=28e3340539c230125e847e8fc223601b97ce753d]
+data.aws_caller_identity.current: Reading...
+data.aws_region.current: Reading...
+aws_iam_role.Process_Orders_role: Refreshing state... [id=Process-Orders-role]
+aws_sqs_queue.Order_Events: Refreshing state... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events]
+data.aws_region.current: Read complete after 0s [id=us-east-1]
+data.aws_caller_identity.current: Read complete after 0s [id=495398516629]
+aws_s3_bucket.reports_archive: Refreshing state... [id=reports-archive-495398516629-us-east-1]
+aws_iam_role_policy_attachment.Process_Orders_basic: Refreshing state... [id=Process-Orders-role/arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole]
+aws_lambda_function.Process_Orders: Refreshing state... [id=Process-Orders]
+aws_cloudwatch_log_group.Process_Orders_logs: Refreshing state... [id=/aws/lambda/Process-Orders]
+
+OpenTofu used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+OpenTofu will perform the following actions:
+
+  # aws_cloudwatch_log_group.Process_Orders_logs will be destroyed
+  - resource "aws_cloudwatch_log_group" "Process_Orders_logs" {
+      - arn                         = "arn:aws:logs:us-east-1:495398516629:log-group:/aws/lambda/Process-Orders" -> null
+      - deletion_protection_enabled = false -> null
+      - id                          = "/aws/lambda/Process-Orders" -> null
+      - log_group_class             = "STANDARD" -> null
+      - name                        = "/aws/lambda/Process-Orders" -> null
+      - region                      = "us-east-1" -> null
+      - retention_in_days           = 1 -> null
+      - skip_destroy                = false -> null
+      - tags                        = {} -> null
+      - tags_all                    = {} -> null
+    }
+
+  # aws_iam_role.Process_Orders_role will be destroyed
+  - resource "aws_iam_role" "Process_Orders_role" {
+      - arn                   = "arn:aws:iam::495398516629:role/Process-Orders-role" -> null
+      - assume_role_policy    = jsonencode(
+            {
+              - Statement = [
+                  - {
+                      - Action    = "sts:AssumeRole"
+                      - Effect    = "Allow"
+                      - Principal = {
+                          - Service = "lambda.amazonaws.com"
+                        }
+                    },
+                ]
+              - Version   = "2012-10-17"
+            }
+        ) -> null
+      - create_date           = "2026-10-13T05:06:50Z" -> null
+      - force_detach_policies = false -> null
+      - id                    = "Process-Orders-role" -> null
+      - managed_policy_arns   = [
+          - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+        ] -> null
+      - max_session_duration  = 3600 -> null
+      - name                  = "Process-Orders-role" -> null
+      - path                  = "/" -> null
+      - tags                  = {} -> null
+      - tags_all              = {} -> null
+      - unique_id             = "AROAXGWANO6KT7QMBWU7G" -> null
+    }
+
+  # aws_iam_role_policy_attachment.Process_Orders_basic will be destroyed
+  - resource "aws_iam_role_policy_attachment" "Process_Orders_basic" {
+      - id         = "Process-Orders-role/arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole" -> null
+      - policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole" -> null
+      - role       = "Process-Orders-role" -> null
+    }
+
+  # aws_lambda_function.Process_Orders will be destroyed
+  - resource "aws_lambda_function" "Process_Orders" {
+      - architectures                  = [
+          - "x86_64",
+        ] -> null
+      - arn                            = "arn:aws:lambda:us-east-1:495398516629:function:Process-Orders" -> null
+      - code_sha256                    = "0A3vrnP94CUgPXsdXG2LspzELsinhQ+7mpbC0RbuzCE=" -> null
+      - filename                       = "./Process_Orders.zip" -> null
+      - function_name                  = "Process-Orders" -> null
+      - handler                        = "index.handler" -> null
+      - id                             = "Process-Orders" -> null
+      - invoke_arn                     = "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:495398516629:function:Process-Orders/invocations" -> null
+      - last_modified                  = "2026-10-13T05:06:59.189+0000" -> null
+      - layers                         = [] -> null
+      - memory_size                    = 128 -> null
+      - package_type                   = "Zip" -> null
+      - publish                        = false -> null
+      - qualified_arn                  = "arn:aws:lambda:us-east-1:495398516629:function:Process-Orders:$LATEST" -> null
+      - qualified_invoke_arn           = "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:495398516629:function:Process-Orders:$LATEST/invocations" -> null
+      - region                         = "us-east-1" -> null
+      - reserved_concurrent_executions = -1 -> null
+      - response_streaming_invoke_arn  = "arn:aws:apigateway:us-east-1:lambda:path/2021-11-15/functions/arn:aws:lambda:us-east-1:495398516629:function:Process-Orders/response-streaming-invocations" -> null
+      - role                           = "arn:aws:iam::495398516629:role/Process-Orders-role" -> null
+      - runtime                        = "python3.12" -> null
+      - skip_destroy                   = false -> null
+      - source_code_hash               = "0A3vrnP94CUgPXsdXG2LspzELsinhQ+7mpbC0RbuzCE=" -> null
+      - source_code_size               = 208 -> null
+      - tags                           = {} -> null
+      - tags_all                       = {} -> null
+      - timeout                        = 3 -> null
+      - version                        = "$LATEST" -> null
+
+      - ephemeral_storage {
+          - size = 512 -> null
+        }
+
+      - logging_config {
+          - log_format = "Text" -> null
+          - log_group  = "/aws/lambda/Process-Orders" -> null
+        }
+
+      - tracing_config {
+          - mode = "PassThrough" -> null
+        }
+    }
+
+  # aws_s3_bucket.reports_archive will be destroyed
+  - resource "aws_s3_bucket" "reports_archive" {
+      - arn                         = "arn:aws:s3:::reports-archive-495398516629-us-east-1" -> null
+      - bucket                      = "reports-archive-495398516629-us-east-1" -> null
+      - bucket_domain_name          = "reports-archive-495398516629-us-east-1.s3.amazonaws.com" -> null
+      - bucket_namespace            = "global" -> null
+      - bucket_region               = "us-east-1" -> null
+      - bucket_regional_domain_name = "reports-archive-495398516629-us-east-1.s3.us-east-1.amazonaws.com" -> null
+      - force_destroy               = false -> null
+      - hosted_zone_id              = "Z3AQBSTGFYJSTF" -> null
+      - id                          = "reports-archive-495398516629-us-east-1" -> null
+      - object_lock_enabled         = false -> null
+      - region                      = "us-east-1" -> null
+      - request_payer               = "BucketOwner" -> null
+      - tags                        = {} -> null
+      - tags_all                    = {} -> null
+
+      - grant {
+          - id          = "ad44cdcdce0ff38ce9b646fd6229ecf37c31ef476a2b98866b02aff0ec6245b9" -> null
+          - permissions = [
+              - "FULL_CONTROL",
+            ] -> null
+          - type        = "CanonicalUser" -> null
+        }
+
+      - server_side_encryption_configuration {
+          - rule {
+              - bucket_key_enabled = false -> null
+
+              - apply_server_side_encryption_by_default {
+                  - sse_algorithm = "AES256" -> null
+                }
+            }
+        }
+
+      - versioning {
+          - enabled    = false -> null
+          - mfa_delete = false -> null
+        }
+    }
+
+  # aws_sqs_queue.Order_Events will be destroyed
+  - resource "aws_sqs_queue" "Order_Events" {
+      - arn                               = "arn:aws:sqs:us-east-1:495398516629:Order-Events" -> null
+      - content_based_deduplication       = false -> null
+      - delay_seconds                     = 0 -> null
+      - fifo_queue                        = false -> null
+      - id                                = "https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events" -> null
+      - kms_data_key_reuse_period_seconds = 300 -> null
+      - max_message_size                  = 262144 -> null
+      - message_retention_seconds         = 345600 -> null
+      - name                              = "Order-Events" -> null
+      - receive_wait_time_seconds         = 0 -> null
+      - region                            = "us-east-1" -> null
+      - sqs_managed_sse_enabled           = true -> null
+      - tags                              = {} -> null
+      - tags_all                          = {} -> null
+      - url                               = "https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events" -> null
+      - visibility_timeout_seconds        = 30 -> null
+    }
+
+Plan: 0 to add, 0 to change, 6 to destroy.
+aws_sqs_queue.Order_Events: Destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events]
+aws_cloudwatch_log_group.Process_Orders_logs: Destroying... [id=/aws/lambda/Process-Orders]
+aws_s3_bucket.reports_archive: Destroying... [id=reports-archive-495398516629-us-east-1]
+aws_cloudwatch_log_group.Process_Orders_logs: Destruction complete after 1s
+aws_lambda_function.Process_Orders: Destroying... [id=Process-Orders]
+aws_s3_bucket.reports_archive: Destruction complete after 2s
+aws_lambda_function.Process_Orders: Destruction complete after 7s
+aws_iam_role_policy_attachment.Process_Orders_basic: Destroying... [id=Process-Orders-role/arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole]
+aws_iam_role_policy_attachment.Process_Orders_basic: Destruction complete after 1s
+aws_iam_role.Process_Orders_role: Destroying... [id=Process-Orders-role]
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 10s elapsed]
+aws_iam_role.Process_Orders_role: Destruction complete after 2s
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 20s elapsed]
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 30s elapsed]
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 40s elapsed]
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 50s elapsed]
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 1m0s elapsed]
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 1m10s elapsed]
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 1m20s elapsed]
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 1m30s elapsed]
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 1m40s elapsed]
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 1m50s elapsed]
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 2m0s elapsed]
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 2m10s elapsed]
+aws_sqs_queue.Order_Events: Destruction complete after 2m16s
+
+Destroy complete! Resources: 6 destroyed.
+exit code: 0

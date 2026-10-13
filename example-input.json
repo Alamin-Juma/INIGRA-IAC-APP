@@ -1,0 +1,8 @@
+{
+  "region": "us-east-1",
+  "resources": [
+    { "type": "object-store", "name": "Reports Archive" },
+    { "type": "queue", "name": "Order Events" },
+    { "type": "function", "name": "Process Orders", "runtime": "python3.12" }
+  ]
+}

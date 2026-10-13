@@ -1,0 +1,21 @@
+### tofu apply
+$ tofu apply tfplan.approved
+
+aws_iam_role.Process_Orders_role: Creating...
+aws_s3_bucket.reports_archive: Creating...
+aws_sqs_queue.Order_Events: Creating...
+aws_iam_role.Process_Orders_role: Creation complete after 3s [id=Process-Orders-role]
+aws_iam_role_policy_attachment.Process_Orders_basic: Creating...
+aws_iam_role_policy_attachment.Process_Orders_basic: Creation complete after 0s [id=Process-Orders-role/arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole]
+aws_lambda_function.Process_Orders: Creating...
+aws_s3_bucket.reports_archive: Creation complete after 8s [id=reports-archive-495398516629-us-east-1]
+aws_sqs_queue.Order_Events: Still creating... [10s elapsed]
+aws_lambda_function.Process_Orders: Still creating... [10s elapsed]
+aws_lambda_function.Process_Orders: Creation complete after 14s [id=Process-Orders]
+aws_cloudwatch_log_group.Process_Orders_logs: Creating...
+aws_cloudwatch_log_group.Process_Orders_logs: Creation complete after 3s [id=/aws/lambda/Process-Orders]
+aws_sqs_queue.Order_Events: Still creating... [20s elapsed]
+aws_sqs_queue.Order_Events: Creation complete after 29s [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events]
+
+Apply complete! Resources: 6 added, 0 changed, 0 destroyed.
+exit code: 0

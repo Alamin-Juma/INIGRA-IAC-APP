@@ -1,0 +1,477 @@
+# DEPLOY-EVIDENCE (consolidated)
+
+\n---\n
+## 00-account.txt
+
+### account under test
+
+{
+    "UserId": "AIDAXGWANO6K43X6WLRRW",
+    "Account": "495398516629",
+    "Arn": "arn:aws:iam::495398516629:user/alidev2543"
+}
+\n---\n
+## 01-init.txt
+
+
+Initializing the backend...
+
+Initializing provider plugins...
+- Reusing previous version of hashicorp/aws from the dependency lock file
+- Reusing previous version of hashicorp/archive from the dependency lock file
+- Using previously-installed hashicorp/archive v2.8.1
+- Using previously-installed hashicorp/aws v6.47.0
+
+OpenTofu has been successfully initialized!
+
+You may now begin working with OpenTofu. Try running "tofu plan" to see
+any changes that are required for your infrastructure. All OpenTofu commands
+should now work.
+
+If you ever set or change modules or backend configuration for OpenTofu,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+\n---\n
+## 02-validate.txt
+
+Success! The configuration is valid.
+\n---\n
+## 02b-plan.txt
+
+data.archive_file.Process_Orders_zip: Reading...
+data.archive_file.Process_Orders_zip: Read complete after 0s [id=28e3340539c230125e847e8fc223601b97ce753d]
+data.aws_caller_identity.current: Reading...
+data.aws_region.current: Reading...
+data.aws_region.current: Read complete after 0s [id=us-east-1]
+data.aws_caller_identity.current: Read complete after 0s [id=495398516629]
+
+OpenTofu used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+OpenTofu will perform the following actions:
+
+  # aws_cloudwatch_log_group.Process_Orders_logs will be created
+  + resource "aws_cloudwatch_log_group" "Process_Orders_logs" {
+      + arn                         = (known after apply)
+      + deletion_protection_enabled = (known after apply)
+      + id                          = (known after apply)
+      + log_group_class             = (known after apply)
+      + name                        = "/aws/lambda/Process-Orders"
+      + name_prefix                 = (known after apply)
+      + region                      = "us-east-1"
+      + retention_in_days           = 1
+      + skip_destroy                = false
+      + tags_all                    = (known after apply)
+    }
+
+  # aws_iam_role.Process_Orders_role will be created
+  + resource "aws_iam_role" "Process_Orders_role" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "sts:AssumeRole"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "lambda.amazonaws.com"
+                        }
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + force_detach_policies = false
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = "Process-Orders-role"
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + tags_all              = (known after apply)
+      + unique_id             = (known after apply)
+
+      + inline_policy (known after apply)
+    }
+
+  # aws_iam_role_policy_attachment.Process_Orders_basic will be created
+  + resource "aws_iam_role_policy_attachment" "Process_Orders_basic" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+      + role       = "Process-Orders-role"
+    }
+
+  # aws_lambda_function.Process_Orders will be created
+  + resource "aws_lambda_function" "Process_Orders" {
+      + architectures                  = (known after apply)
+      + arn                            = (known after apply)
+      + code_sha256                    = (known after apply)
+      + filename                       = "./Process_Orders.zip"
+      + function_name                  = "Process-Orders"
+      + handler                        = "index.handler"
+      + id                             = (known after apply)
+      + invoke_arn                     = (known after apply)
+      + last_modified                  = (known after apply)
+      + memory_size                    = 128
+      + package_type                   = "Zip"
+      + publish                        = false
+      + qualified_arn                  = (known after apply)
+      + qualified_invoke_arn           = (known after apply)
+      + region                         = "us-east-1"
+      + reserved_concurrent_executions = -1
+      + response_streaming_invoke_arn  = (known after apply)
+      + role                           = (known after apply)
+      + runtime                        = "python3.12"
+      + signing_job_arn                = (known after apply)
+      + signing_profile_version_arn    = (known after apply)
+      + skip_destroy                   = false
+      + source_code_hash               = "0A3vrnP94CUgPXsdXG2LspzELsinhQ+7mpbC0RbuzCE="
+      + source_code_size               = (known after apply)
+      + tags_all                       = (known after apply)
+      + timeout                        = 3
+      + version                        = (known after apply)
+
+      + ephemeral_storage (known after apply)
+
+      + logging_config (known after apply)
+
+      + tracing_config (known after apply)
+    }
+
+  # aws_s3_bucket.reports_archive will be created
+  + resource "aws_s3_bucket" "reports_archive" {
+      + acceleration_status         = (known after apply)
+      + acl                         = (known after apply)
+      + arn                         = (known after apply)
+      + bucket                      = "reports-archive-495398516629-us-east-1"
+      + bucket_domain_name          = (known after apply)
+      + bucket_namespace            = (known after apply)
+      + bucket_prefix               = (known after apply)
+      + bucket_region               = (known after apply)
+      + bucket_regional_domain_name = (known after apply)
+      + force_destroy               = false
+      + hosted_zone_id              = (known after apply)
+      + id                          = (known after apply)
+      + object_lock_enabled         = (known after apply)
+      + policy                      = (known after apply)
+      + region                      = "us-east-1"
+      + request_payer               = (known after apply)
+      + tags_all                    = (known after apply)
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+
+      + cors_rule (known after apply)
+
+      + grant (known after apply)
+
+      + lifecycle_rule (known after apply)
+
+      + logging (known after apply)
+
+      + object_lock_configuration (known after apply)
+
+      + replication_configuration (known after apply)
+
+      + server_side_encryption_configuration (known after apply)
+
+      + versioning (known after apply)
+
+      + website (known after apply)
+    }
+
+  # aws_sqs_queue.Order_Events will be created
+  + resource "aws_sqs_queue" "Order_Events" {
+      + arn                               = (known after apply)
+      + content_based_deduplication       = false
+      + deduplication_scope               = (known after apply)
+      + delay_seconds                     = 0
+      + fifo_queue                        = false
+      + fifo_throughput_limit             = (known after apply)
+      + id                                = (known after apply)
+      + kms_data_key_reuse_period_seconds = (known after apply)
+      + max_message_size                  = 262144
+      + message_retention_seconds         = 345600
+      + name                              = "Order-Events"
+      + name_prefix                       = (known after apply)
+      + policy                            = (known after apply)
+      + receive_wait_time_seconds         = 0
+      + redrive_allow_policy              = (known after apply)
+      + redrive_policy                    = (known after apply)
+      + region                            = "us-east-1"
+      + sqs_managed_sse_enabled           = (known after apply)
+      + tags_all                          = (known after apply)
+      + url                               = (known after apply)
+      + visibility_timeout_seconds        = 30
+    }
+
+Plan: 6 to add, 0 to change, 0 to destroy.
+
+─────────────────────────────────────────────────────────────────────────────
+
+Saved the plan to: tfplan.approved
+
+To perform exactly these actions, run the following command to apply:
+    tofu apply "tfplan.approved"
+\n---\n
+## 03-apply.txt
+
+### tofu apply
+$ tofu apply tfplan.approved
+
+aws_iam_role.Process_Orders_role: Creating...
+aws_s3_bucket.reports_archive: Creating...
+aws_sqs_queue.Order_Events: Creating...
+aws_iam_role.Process_Orders_role: Creation complete after 3s [id=Process-Orders-role]
+aws_iam_role_policy_attachment.Process_Orders_basic: Creating...
+aws_iam_role_policy_attachment.Process_Orders_basic: Creation complete after 0s [id=Process-Orders-role/arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole]
+aws_lambda_function.Process_Orders: Creating...
+aws_s3_bucket.reports_archive: Creation complete after 8s [id=reports-archive-495398516629-us-east-1]
+aws_sqs_queue.Order_Events: Still creating... [10s elapsed]
+aws_lambda_function.Process_Orders: Still creating... [10s elapsed]
+aws_lambda_function.Process_Orders: Creation complete after 14s [id=Process-Orders]
+aws_cloudwatch_log_group.Process_Orders_logs: Creating...
+aws_cloudwatch_log_group.Process_Orders_logs: Creation complete after 3s [id=/aws/lambda/Process-Orders]
+aws_sqs_queue.Order_Events: Still creating... [20s elapsed]
+aws_sqs_queue.Order_Events: Creation complete after 29s [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events]
+
+Apply complete! Resources: 6 added, 0 changed, 0 destroyed.
+exit code: 0
+\n---\n
+## 04-plan-after-apply.txt
+
+### tofu plan (second plan -- the bar is NO CHANGES)
+$ tofu plan -detailed-exitcode
+
+data.archive_file.Process_Orders_zip: Reading...
+data.archive_file.Process_Orders_zip: Read complete after 0s [id=28e3340539c230125e847e8fc223601b97ce753d]
+data.aws_caller_identity.current: Reading...
+data.aws_region.current: Reading...
+data.aws_region.current: Read complete after 0s [id=us-east-1]
+aws_sqs_queue.Order_Events: Refreshing state... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events]
+aws_iam_role.Process_Orders_role: Refreshing state... [id=Process-Orders-role]
+data.aws_caller_identity.current: Read complete after 0s [id=495398516629]
+aws_s3_bucket.reports_archive: Refreshing state... [id=reports-archive-495398516629-us-east-1]
+aws_iam_role_policy_attachment.Process_Orders_basic: Refreshing state... [id=Process-Orders-role/arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole]
+aws_lambda_function.Process_Orders: Refreshing state... [id=Process-Orders]
+aws_cloudwatch_log_group.Process_Orders_logs: Refreshing state... [id=/aws/lambda/Process-Orders]
+
+No changes. Your infrastructure matches the configuration.
+
+OpenTofu has compared your real infrastructure against your configuration and
+found no differences, so no changes are needed.
+detailed-exitcode: 0   (0 = no changes, 2 = drift)
+\n---\n
+## 05-destroy.txt
+
+### tofu destroy
+$ tofu destroy -auto-approve
+
+data.archive_file.Process_Orders_zip: Reading...
+data.archive_file.Process_Orders_zip: Read complete after 0s [id=28e3340539c230125e847e8fc223601b97ce753d]
+data.aws_caller_identity.current: Reading...
+data.aws_region.current: Reading...
+aws_iam_role.Process_Orders_role: Refreshing state... [id=Process-Orders-role]
+aws_sqs_queue.Order_Events: Refreshing state... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events]
+data.aws_region.current: Read complete after 0s [id=us-east-1]
+data.aws_caller_identity.current: Read complete after 0s [id=495398516629]
+aws_s3_bucket.reports_archive: Refreshing state... [id=reports-archive-495398516629-us-east-1]
+aws_iam_role_policy_attachment.Process_Orders_basic: Refreshing state... [id=Process-Orders-role/arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole]
+aws_lambda_function.Process_Orders: Refreshing state... [id=Process-Orders]
+aws_cloudwatch_log_group.Process_Orders_logs: Refreshing state... [id=/aws/lambda/Process-Orders]
+
+OpenTofu used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+OpenTofu will perform the following actions:
+
+  # aws_cloudwatch_log_group.Process_Orders_logs will be destroyed
+  - resource "aws_cloudwatch_log_group" "Process_Orders_logs" {
+      - arn                         = "arn:aws:logs:us-east-1:495398516629:log-group:/aws/lambda/Process-Orders" -> null
+      - deletion_protection_enabled = false -> null
+      - id                          = "/aws/lambda/Process-Orders" -> null
+      - log_group_class             = "STANDARD" -> null
+      - name                        = "/aws/lambda/Process-Orders" -> null
+      - region                      = "us-east-1" -> null
+      - retention_in_days           = 1 -> null
+      - skip_destroy                = false -> null
+      - tags                        = {} -> null
+      - tags_all                    = {} -> null
+    }
+
+  # aws_iam_role.Process_Orders_role will be destroyed
+  - resource "aws_iam_role" "Process_Orders_role" {
+      - arn                   = "arn:aws:iam::495398516629:role/Process-Orders-role" -> null
+      - assume_role_policy    = jsonencode(
+            {
+              - Statement = [
+                  - {
+                      - Action    = "sts:AssumeRole"
+                      - Effect    = "Allow"
+                      - Principal = {
+                          - Service = "lambda.amazonaws.com"
+                        }
+                    },
+                ]
+              - Version   = "2012-10-17"
+            }
+        ) -> null
+      - create_date           = "2026-10-13T05:06:50Z" -> null
+      - force_detach_policies = false -> null
+      - id                    = "Process-Orders-role" -> null
+      - managed_policy_arns   = [
+          - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+        ] -> null
+      - max_session_duration  = 3600 -> null
+      - name                  = "Process-Orders-role" -> null
+      - path                  = "/" -> null
+      - tags                  = {} -> null
+      - tags_all              = {} -> null
+      - unique_id             = "AROAXGWANO6KT7QMBWU7G" -> null
+    }
+
+  # aws_iam_role_policy_attachment.Process_Orders_basic will be destroyed
+  - resource "aws_iam_role_policy_attachment" "Process_Orders_basic" {
+      - id         = "Process-Orders-role/arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole" -> null
+      - policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole" -> null
+      - role       = "Process-Orders-role" -> null
+    }
+
+  # aws_lambda_function.Process_Orders will be destroyed
+  - resource "aws_lambda_function" "Process_Orders" {
+      - architectures                  = [
+          - "x86_64",
+        ] -> null
+      - arn                            = "arn:aws:lambda:us-east-1:495398516629:function:Process-Orders" -> null
+      - code_sha256                    = "0A3vrnP94CUgPXsdXG2LspzELsinhQ+7mpbC0RbuzCE=" -> null
+      - filename                       = "./Process_Orders.zip" -> null
+      - function_name                  = "Process-Orders" -> null
+      - handler                        = "index.handler" -> null
+      - id                             = "Process-Orders" -> null
+      - invoke_arn                     = "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:495398516629:function:Process-Orders/invocations" -> null
+      - last_modified                  = "2026-10-13T05:06:59.189+0000" -> null
+      - layers                         = [] -> null
+      - memory_size                    = 128 -> null
+      - package_type                   = "Zip" -> null
+      - publish                        = false -> null
+      - qualified_arn                  = "arn:aws:lambda:us-east-1:495398516629:function:Process-Orders:$LATEST" -> null
+      - qualified_invoke_arn           = "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:495398516629:function:Process-Orders:$LATEST/invocations" -> null
+      - region                         = "us-east-1" -> null
+      - reserved_concurrent_executions = -1 -> null
+      - response_streaming_invoke_arn  = "arn:aws:apigateway:us-east-1:lambda:path/2021-11-15/functions/arn:aws:lambda:us-east-1:495398516629:function:Process-Orders/response-streaming-invocations" -> null
+      - role                           = "arn:aws:iam::495398516629:role/Process-Orders-role" -> null
+      - runtime                        = "python3.12" -> null
+      - skip_destroy                   = false -> null
+      - source_code_hash               = "0A3vrnP94CUgPXsdXG2LspzELsinhQ+7mpbC0RbuzCE=" -> null
+      - source_code_size               = 208 -> null
+      - tags                           = {} -> null
+      - tags_all                       = {} -> null
+      - timeout                        = 3 -> null
+      - version                        = "$LATEST" -> null
+
+      - ephemeral_storage {
+          - size = 512 -> null
+        }
+
+      - logging_config {
+          - log_format = "Text" -> null
+          - log_group  = "/aws/lambda/Process-Orders" -> null
+        }
+
+      - tracing_config {
+          - mode = "PassThrough" -> null
+        }
+    }
+
+  # aws_s3_bucket.reports_archive will be destroyed
+  - resource "aws_s3_bucket" "reports_archive" {
+      - arn                         = "arn:aws:s3:::reports-archive-495398516629-us-east-1" -> null
+      - bucket                      = "reports-archive-495398516629-us-east-1" -> null
+      - bucket_domain_name          = "reports-archive-495398516629-us-east-1.s3.amazonaws.com" -> null
+      - bucket_namespace            = "global" -> null
+      - bucket_region               = "us-east-1" -> null
+      - bucket_regional_domain_name = "reports-archive-495398516629-us-east-1.s3.us-east-1.amazonaws.com" -> null
+      - force_destroy               = false -> null
+      - hosted_zone_id              = "Z3AQBSTGFYJSTF" -> null
+      - id                          = "reports-archive-495398516629-us-east-1" -> null
+      - object_lock_enabled         = false -> null
+      - region                      = "us-east-1" -> null
+      - request_payer               = "BucketOwner" -> null
+      - tags                        = {} -> null
+      - tags_all                    = {} -> null
+
+      - grant {
+          - id          = "ad44cdcdce0ff38ce9b646fd6229ecf37c31ef476a2b98866b02aff0ec6245b9" -> null
+          - permissions = [
+              - "FULL_CONTROL",
+            ] -> null
+          - type        = "CanonicalUser" -> null
+        }
+
+      - server_side_encryption_configuration {
+          - rule {
+              - bucket_key_enabled = false -> null
+
+              - apply_server_side_encryption_by_default {
+                  - sse_algorithm = "AES256" -> null
+                }
+            }
+        }
+
+      - versioning {
+          - enabled    = false -> null
+          - mfa_delete = false -> null
+        }
+    }
+
+  # aws_sqs_queue.Order_Events will be destroyed
+  - resource "aws_sqs_queue" "Order_Events" {
+      - arn                               = "arn:aws:sqs:us-east-1:495398516629:Order-Events" -> null
+      - content_based_deduplication       = false -> null
+      - delay_seconds                     = 0 -> null
+      - fifo_queue                        = false -> null
+      - id                                = "https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events" -> null
+      - kms_data_key_reuse_period_seconds = 300 -> null
+      - max_message_size                  = 262144 -> null
+      - message_retention_seconds         = 345600 -> null
+      - name                              = "Order-Events" -> null
+      - receive_wait_time_seconds         = 0 -> null
+      - region                            = "us-east-1" -> null
+      - sqs_managed_sse_enabled           = true -> null
+      - tags                              = {} -> null
+      - tags_all                          = {} -> null
+      - url                               = "https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events" -> null
+      - visibility_timeout_seconds        = 30 -> null
+    }
+
+Plan: 0 to add, 0 to change, 6 to destroy.
+aws_sqs_queue.Order_Events: Destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events]
+aws_cloudwatch_log_group.Process_Orders_logs: Destroying... [id=/aws/lambda/Process-Orders]
+aws_s3_bucket.reports_archive: Destroying... [id=reports-archive-495398516629-us-east-1]
+aws_cloudwatch_log_group.Process_Orders_logs: Destruction complete after 1s
+aws_lambda_function.Process_Orders: Destroying... [id=Process-Orders]
+aws_s3_bucket.reports_archive: Destruction complete after 2s
+aws_lambda_function.Process_Orders: Destruction complete after 7s
+aws_iam_role_policy_attachment.Process_Orders_basic: Destroying... [id=Process-Orders-role/arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole]
+aws_iam_role_policy_attachment.Process_Orders_basic: Destruction complete after 1s
+aws_iam_role.Process_Orders_role: Destroying... [id=Process-Orders-role]
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 10s elapsed]
+aws_iam_role.Process_Orders_role: Destruction complete after 2s
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 20s elapsed]
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 30s elapsed]
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 40s elapsed]
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 50s elapsed]
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 1m0s elapsed]
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 1m10s elapsed]
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 1m20s elapsed]
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 1m30s elapsed]
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 1m40s elapsed]
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 1m50s elapsed]
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 2m0s elapsed]
+aws_sqs_queue.Order_Events: Still destroying... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events, 2m10s elapsed]
+aws_sqs_queue.Order_Events: Destruction complete after 2m16s
+
+Destroy complete! Resources: 6 destroyed.
+exit code: 0

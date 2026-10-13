@@ -1,0 +1,21 @@
+### tofu plan (second plan -- the bar is NO CHANGES)
+$ tofu plan -detailed-exitcode
+
+data.archive_file.Process_Orders_zip: Reading...
+data.archive_file.Process_Orders_zip: Read complete after 0s [id=28e3340539c230125e847e8fc223601b97ce753d]
+data.aws_caller_identity.current: Reading...
+data.aws_region.current: Reading...
+data.aws_region.current: Read complete after 0s [id=us-east-1]
+aws_sqs_queue.Order_Events: Refreshing state... [id=https://sqs.us-east-1.amazonaws.com/495398516629/Order-Events]
+aws_iam_role.Process_Orders_role: Refreshing state... [id=Process-Orders-role]
+data.aws_caller_identity.current: Read complete after 0s [id=495398516629]
+aws_s3_bucket.reports_archive: Refreshing state... [id=reports-archive-495398516629-us-east-1]
+aws_iam_role_policy_attachment.Process_Orders_basic: Refreshing state... [id=Process-Orders-role/arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole]
+aws_lambda_function.Process_Orders: Refreshing state... [id=Process-Orders]
+aws_cloudwatch_log_group.Process_Orders_logs: Refreshing state... [id=/aws/lambda/Process-Orders]
+
+No changes. Your infrastructure matches the configuration.
+
+OpenTofu has compared your real infrastructure against your configuration and
+found no differences, so no changes are needed.
+detailed-exitcode: 0   (0 = no changes, 2 = drift)

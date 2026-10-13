@@ -1,0 +1,7 @@
+### account under test
+
+{
+    "UserId": "AIDAXGWANO6K43X6WLRRW",
+    "Account": "495398516629",
+    "Arn": "arn:aws:iam::495398516629:user/alidev2543"
+}

@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.terraform/
+*.tfstate
+*.tfstate.*
+*.zip
+*.csv
+tfplan.approved
+.DS_Store
+Thumbs.db
